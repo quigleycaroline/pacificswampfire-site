@@ -7,7 +7,7 @@ statement: ""
 description: "Photographs by Caroline Quigley. Landscape, place and the people in it."
 
 # Your live address, no trailing slash. Used for links, previews and the domain file.
-base_url: http://localhost:8000
+base_url: https://pacificswampfire.studio
 
 # Opening image: collection-folder/filename. Leave blank to use the first collection's cover.
 hero: "01-southern-california/01.jpg"
