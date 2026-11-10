@@ -3,7 +3,7 @@
 name: Pacific Swampfire          # the wordmark at the top of every page
 artist: Caroline Quigley
 tagline: Photography
-description: "Pacific Swampfire is the multimedia artistic project of Caroline Quigley, a multidisciplinary artist and writer based in Los Angeles. Photography portfolio."
+description: "Pacific Swampfire is the photography project of Caroline Quigley, an artist and writer based in Los Angeles. Landscape on film across California and the American West."
 
 # Your live address, no trailing slash.
 base_url: https://pacificswampfire.studio
@@ -23,9 +23,7 @@ featured_per_collection: 12
 
 # About page
 bio: |
-  Pacific Swampfire is the multimedia artistic project of Caroline Quigley, a multidisciplinary artist and writer based in Los Angeles.
-
-  This is her photography portfolio.
+  Pacific Swampfire is the photography project of Caroline Quigley, an artist and writer based in Los Angeles. Her photographs depict landscape and the people and animals moving through it, shot on film across California and the American West.
 
 # Contact page
 contact_heading: Contact
