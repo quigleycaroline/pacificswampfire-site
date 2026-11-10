@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-{% set full_title = (title ~ " — " ~ site.name) if title else (site.name ~ (" — " ~ site.tagline if site.tagline else "")) %}
+{% set full_title = (title ~ " | " ~ site.name) if title else (site.name ~ (" | " ~ site.tagline if site.tagline else "")) %}
 {% set desc = description or site.description or "" %}
 <title>{{ full_title }}</title>
 <meta name="description" content="{{ desc }}">
 <link rel="canonical" href="{{ site.base_url }}{{ path }}">
-<meta name="theme-color" content="#f3f0e9">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.name }}">
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">{% endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="/static/site.css">
 <script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":{{ site.name|tojson }},"url":{{ (site.base_url ~ "/")|tojson }}{% if site.instagram %},"sameAs":[{{ ("https://instagram.com/" ~ site.instagram)|tojson }}]{% endif %},"jobTitle":"Photographer"}</script>
@@ -28,9 +28,11 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head" id="head">
   <a class="mark" href="/">{{ site.name }}</a>
-  <nav class="nav" aria-label="Primary">
-    <a href="/work/"{% if page in ("work", "collection") %} aria-current="page"{% endif %}>Work</a>
-    <a href="/information/"{% if page == "information" %} aria-current="page"{% endif %}>Information</a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="/work/"{% if page in ("work", "collection") %} aria-current="page"{% endif %}>Collections</a>
+    <a href="/about/"{% if page == "about" %} aria-current="page"{% endif %}>About</a>
+    <a href="/contact/"{% if page == "contact" %} aria-current="page"{% endif %}>Contact</a>
   </nav>
 </header>
 <main id="main">
@@ -39,11 +41,20 @@
 <footer class="site-foot">
   <span>&copy; {{ site.year }} {{ site.name }}</span>
   <span class="foot-links">
-    {% if site.email %}<a href="mailto:{{ site.email }}">Email</a>{% endif %}
     {% if site.instagram %}<a href="https://instagram.com/{{ site.instagram }}" rel="me noopener" target="_blank">Instagram</a>{% endif %}
+    {% if site.email %}<a href="mailto:{{ site.email }}">Email</a>{% endif %}
   </span>
 </footer>
-{% block extra %}{% endblock %}
+{% if lightbox %}
+<dialog class="lb" id="lb" aria-label="Image viewer">
+  <button type="button" class="lb-close" aria-label="Close">Close</button>
+  <div class="lb-stage"><picture><source type="image/avif"><source type="image/webp"><img alt=""></picture></div>
+  <button type="button" class="lb-prev" aria-label="Previous"><span aria-hidden="true">&larr;</span></button>
+  <button type="button" class="lb-next" aria-label="Next"><span aria-hidden="true">&rarr;</span></button>
+  <div class="lb-bar"><span class="lb-cap"></span><span class="lb-count"></span></div>
+</dialog>
+<script id="lb-data" type="application/json">{{ lightbox|safe }}</script>
+{% endif %}
 <script src="/static/site.js" defer></script>
 </body>
 </html>

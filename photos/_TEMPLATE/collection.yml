@@ -5,7 +5,7 @@ title: Salt Flats
 place: Inyo County, California
 year: 2025
 intro: |
-  One or two quiet sentences, if they add something the pictures don't.
+  One line, if it adds something the pictures don't.
 
 cover: 04.jpg          # image used on the home index and Work page (default: first image)
 order: 1               # position among collections (default: folder name order, e.g. 01-..., 02-...)
@@ -16,19 +16,3 @@ images:
   03.jpg:
     caption: Badwater, before sunrise
     alt: Flat white salt crust under a pale dawn sky
-
-# Optional manual layout. Leave this out and the site sequences the collection itself.
-# Any image not listed is placed automatically after these.
-#   full          edge-to-edge
-#   inset         large, centred
-#   inset-left    large, pushed left
-#   inset-right   large, pushed right
-#   center        medium, centred
-#   offset-left   single vertical, left of centre
-#   offset-right  single vertical, right of centre
-#   pair          two side by side
-# layout:
-#   - full: 01.jpg
-#   - pair: [02.jpg, 05.jpg]
-#   - offset-right: 03.jpg
-#   - inset: 04.jpg

@@ -1,35 +1,6 @@
 {% extends "base.html" %}
-{% from "_macros.html" import picture %}
+{% from "_macros.html" import wall %}
 {% block main %}
-{% if hero %}
-<section class="hero hero--{{ hero.orient }}" style="--ar:{{ '%.4f'|format(hero.ratio) }};--tone:{{ hero.tone }};{% if site.hero_focus %}--focus:{{ site.hero_focus }}{% endif %}">
-  <a class="hero-fig ph" href="/work/{{ hero.collection_slug }}/" aria-label="View the collection">
-    {{ picture(hero, "(max-width: 760px) 100vw, (orientation: portrait) 100vw, " ~ ("100vw" if hero.orient == "L" else "55vw"), eager=True) }}
-  </a>
-  <div class="hero-text">
-    {% if site.tagline %}<p class="eyebrow">{{ site.tagline }}</p>{% endif %}
-    {% if site.statement %}<p class="lede">{{ site.statement }}</p>{% endif %}
-  </div>
-</section>
-{% endif %}
-
-<section class="index" aria-labelledby="index-h">
-  <h2 class="eyebrow index-h" id="index-h">Index</h2>
-  <ol class="index-list">
-  {% for c in collections %}
-    <li>
-      <a class="index-row" href="{{ c.url }}" data-peek="{{ c.cover.fallback }}" data-tone="{{ c.cover.tone }}">
-        <span class="n">{{ '%02d'|format(c.number) }}</span>
-        <span class="t">{{ c.title }}</span>
-        <span class="m">{{ [c.meta.place, c.meta.year]|select|join(", ") }}</span>
-        <span class="k">{{ c.photos|length }}</span>
-        <span class="index-thumb ph" style="--ar:{{ '%.4f'|format(c.cover.ratio) }};--tone:{{ c.cover.tone }}">
-          {{ picture(c.cover, "40vw") }}
-        </span>
-      </a>
-    </li>
-  {% endfor %}
-  </ol>
-  <div class="peek" aria-hidden="true"><img alt=""></div>
-</section>
+<h1 class="sr-only">{{ site.name }}, photographs</h1>
+{{ wall(featured, cols=4) }}
 {% endblock %}

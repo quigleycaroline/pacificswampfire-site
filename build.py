@@ -60,6 +60,7 @@ class Photo:
     fallback: str = ""
     alt: str = ""
     caption: str = ""
+    collection_title: str = ""
 
     @property
     def ratio(self) -> float:
@@ -75,7 +76,8 @@ class Photo:
 
     def lightbox(self) -> dict:
         return {"avif": self.srcset("avif"), "webp": self.srcset("webp"), "src": self.fallback,
-                "w": self.width, "h": self.height, "alt": self.alt, "caption": self.caption}
+                "w": self.width, "h": self.height, "alt": self.alt, "caption": self.caption,
+                "collection": self.collection_title, "url": f"/work/{self.collection_slug}/"}
 
 
 @dataclass
@@ -267,7 +269,7 @@ def load_collections() -> list[Collection]:
             t = texts.get(f.name) or {}
             if isinstance(t, str):
                 t = {"caption": t}
-            photos.append(Photo(file=f, collection_slug=slug, caption=t.get("caption", ""),
+            photos.append(Photo(file=f, collection_slug=slug, caption=t.get("caption", ""), collection_title=title,
                                 alt=t.get("alt") or t.get("caption") or f"{title}, photograph {i + 1} of {len(files)}"))
         cols.append(Collection(slug=slug, folder=d, title=title, meta=meta, photos=photos))
     cols.sort(key=lambda c: (c.meta.get("order", 999),))
@@ -286,6 +288,22 @@ def find_photo(cols: list[Collection], ref: str | None) -> Photo | None:
                 if p.file.name == name:
                     return p
     sys.exit(f"site.yml: hero '{ref}' not found. Use  collection-folder/filename.jpg")
+
+
+def auto_featured(cols: list[Collection], per: int) -> list[Photo]:
+    """Home wall: the cover plus evenly spaced frames from each collection, interleaved."""
+    picks = []
+    for c in cols:
+        n = len(c.photos); k = min(per, n)
+        idx = sorted({round(j * (n - 1) / max(k - 1, 1)) for j in range(k)})
+        chosen = [c.cover] + [c.photos[j] for j in idx if c.photos[j] is not c.cover]
+        picks.append(chosen[:k])
+    out = []
+    for r in range(max(map(len, picks), default=0)):
+        for lst in picks:
+            if r < len(lst):
+                out.append(lst[r])
+    return out
 
 
 # --------------------------------------------------------------------------- build
@@ -313,6 +331,8 @@ def build() -> None:
         c.blocks = manual_blocks(seq, c.photos, f"{c.folder.name}/collection.yml") if seq else auto_blocks(c.photos)
 
     hero = find_photo(cols, site.get("hero")) or (cols[0].cover if cols else None)
+    featured = [find_photo(cols, r) for r in site.get("featured") or []] or auto_featured(cols, site.get("featured_per_collection", 7))
+    portrait = find_photo(cols, site.get("portrait"))
 
     env = Environment(loader=FileSystemLoader(SRC / "templates"), autoescape=select_autoescape(["html", "xml"]),
                       trim_blocks=True, lstrip_blocks=True)
@@ -324,23 +344,25 @@ def build() -> None:
         path.write_text(env.get_template(tpl).render(**ctx))
 
     og = (lambda p: f"{site['base_url']}{p.fallback}" if p else "")
-    render("home.html", "index.html", page="home", hero=hero, og_image=og(hero), path="/")
-    render("work.html", "work/index.html", page="work", og_image=og(hero), path="/work/",
-           title="Work")
+    lb = lambda ps: json.dumps([p.lightbox() for p in ps])
+    render("home.html", "index.html", page="home", featured=featured, lightbox=lb(featured),
+           og_image=og(hero), path="/")
+    render("work.html", "work/index.html", page="work", og_image=og(hero), path="/work/", title="Collections")
     for i, c in enumerate(cols):
         nxt = cols[(i + 1) % len(cols)] if len(cols) > 1 else None
         prv = cols[i - 1] if len(cols) > 1 else None
         render("collection.html", f"work/{c.slug}/index.html", page="collection", c=c, next_c=nxt, prev_c=prv,
-               lightbox=json.dumps([p.lightbox() for p in c.photos]), og_image=og(c.cover),
-               path=c.url, title=c.title, description=(c.meta.get("intro") or "").strip())
-    render("information.html", "information/index.html", page="information", og_image=og(hero),
-           path="/information/", title="Information")
+               lightbox=lb(c.photos), og_image=og(c.cover), path=c.url, title=c.title,
+               description=(c.meta.get("intro") or "").strip())
+    render("about.html", "about/index.html", page="about", portrait=portrait, og_image=og(hero),
+           path="/about/", title="About")
+    render("contact.html", "contact/index.html", page="contact", og_image=og(hero), path="/contact/", title="Contact")
     render("404.html", "404.html", page="404", title="Not found", path="/404")
 
     # static assets, sitemap, robots, CNAME
     shutil.copytree(SRC / "static", DIST / "static")
     shutil.copyfile(SRC / "static" / "favicon.svg", DIST / "favicon.svg")
-    urls = ["/", "/work/", "/information/"] + [c.url for c in cols]
+    urls = ["/", "/work/", "/about/", "/contact/"] + [c.url for c in cols]
     base = site["base_url"]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

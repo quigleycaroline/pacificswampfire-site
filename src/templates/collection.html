@@ -1,65 +1,17 @@
 {% extends "base.html" %}
-{% from "_macros.html" import picture %}
-{% set SIZES = {
-  "full": "100vw",
-  "inset": "(max-width: 760px) 100vw, 82vw",
-  "inset-left": "(max-width: 760px) 100vw, 66vw",
-  "inset-right": "(max-width: 760px) 100vw, 66vw",
-  "center": "(max-width: 760px) 100vw, 50vw",
-  "offset-left": "(max-width: 760px) 82vw, 42vw",
-  "offset-right": "(max-width: 760px) 82vw, 42vw",
-  "pair": "(max-width: 760px) 100vw, 42vw",
-} %}
+{% from "_macros.html" import wall %}
 {% block main %}
 <header class="col-head">
-  <p class="eyebrow">{{ '%02d'|format(c.number) }} / {{ '%02d'|format(collections|length) }}</p>
-  <h1 class="display">{{ c.title }}</h1>
-  <p class="col-meta">{{ [c.meta.place, c.meta.year]|select|join(", ") }}{% if c.meta.place or c.meta.year %} &middot; {% endif %}{{ c.photos|length }} photographs</p>
-  {% if c.meta.intro %}<div class="col-intro">{% for para in c.meta.intro.strip().split("\n\n") %}<p>{{ para }}</p>{% endfor %}</div>{% endif %}
+  <h1 class="page-title">{{ c.title }}</h1>
+  {% if c.meta.place or c.meta.year %}<p class="col-meta">{{ [c.meta.place, c.meta.year]|select|join(", ") }}</p>{% endif %}
+  {% if c.meta.intro %}<p class="col-intro">{{ c.meta.intro.strip() }}</p>{% endif %}
 </header>
-
-<div class="seq">
-{% for b in c.blocks %}
-  {% set bi = loop.index0 %}
-  <section class="blk blk--{{ b.type }}">
-  {% for p in b.photos %}
-    <figure class="fig o-{{ p.orient }}" style="--ar:{{ '%.4f'|format(p.ratio) }};--tone:{{ p.tone }}">
-      <button class="ph" type="button" data-i="{{ p.index }}" aria-label="View larger: {{ p.alt }}">
-        {{ picture(p, SIZES[b.type], eager=bi == 0) }}
-      </button>
-      {% if p.caption %}<figcaption>{{ p.caption }}</figcaption>{% endif %}
-    </figure>
-  {% endfor %}
-  </section>
-{% endfor %}
-</div>
-
+{{ wall(c.photos, cols=3, eager=6) }}
 {% if next_c %}
-<nav class="next" aria-label="Collections">
-  <a class="next-link" href="{{ next_c.url }}">
-    <span class="eyebrow">Next</span>
-    <span class="display next-t">{{ next_c.title }}</span>
-  </a>
-  <span class="next-aux">
-    {% if prev_c and prev_c is not sameas next_c %}<a href="{{ prev_c.url }}">&larr; {{ prev_c.title }}</a>{% endif %}
-    <a href="/work/">All work</a>
-  </span>
+<nav class="pager" aria-label="Collections">
+  {% if prev_c and prev_c is not sameas next_c %}<a href="{{ prev_c.url }}">&larr; {{ prev_c.title }}</a>{% else %}<span></span>{% endif %}
+  <a href="/work/">All collections</a>
+  <a href="{{ next_c.url }}">{{ next_c.title }} &rarr;</a>
 </nav>
 {% endif %}
-{% endblock %}
-
-{% block extra %}
-<dialog class="lb" id="lb" aria-label="Image viewer">
-  <div class="lb-stage"><picture><source type="image/avif"><source type="image/webp"><img alt=""></picture></div>
-  <div class="lb-bar">
-    <span class="lb-count"></span>
-    <span class="lb-cap"></span>
-    <span class="lb-ctl">
-      <button type="button" class="lb-prev" aria-label="Previous">Prev</button>
-      <button type="button" class="lb-next" aria-label="Next">Next</button>
-      <button type="button" class="lb-close" aria-label="Close">Close</button>
-    </span>
-  </div>
-</dialog>
-<script id="lb-data" type="application/json">{{ lightbox|safe }}</script>
 {% endblock %}

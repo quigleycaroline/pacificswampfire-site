@@ -1,24 +1,17 @@
 {% extends "base.html" %}
 {% from "_macros.html" import picture %}
 {% block main %}
-<header class="page-head">
-  <h1 class="display">Work</h1>
-</header>
-<ol class="covers">
+<h1 class="page-title">Collections</h1>
+<ul class="covers">
 {% for c in collections %}
   {% set p = c.cover %}
-  <li class="cover cover--{{ loop.index0 % 4 }} o-{{ p.orient }}">
-    <a href="{{ c.url }}">
-      <span class="ph" style="--ar:{{ '%.4f'|format(p.ratio) }};--tone:{{ p.tone }}">
-        {{ picture(p, "(max-width: 760px) 90vw, 46vw", eager=loop.index0 < 2) }}
-      </span>
-      <span class="cover-cap">
-        <span class="n">{{ '%02d'|format(c.number) }}</span>
-        <span class="t">{{ c.title }}</span>
-        <span class="m">{{ [c.meta.place, c.meta.year]|select|join(", ") }}</span>
-      </span>
+  <li>
+    <a class="cover" href="{{ c.url }}">
+      <span class="ph cover-img" style="--tone:{{ p.tone }}">{{ picture(p, "(max-width: 640px) 50vw, 33vw", eager=loop.index0 < 6) }}</span>
+      <span class="cover-t">{{ c.title }}</span>
+      <span class="cover-m">{{ c.photos|length }} photographs</span>
     </a>
   </li>
 {% endfor %}
-</ol>
+</ul>
 {% endblock %}

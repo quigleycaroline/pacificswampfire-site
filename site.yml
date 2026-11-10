@@ -9,12 +9,21 @@ description: "Photographs by Caroline Quigley. Landscape, place and the people i
 # Your live address, no trailing slash. Used for links, previews and the domain file.
 base_url: https://pacificswampfire.studio
 
-# Opening image: collection-folder/filename. Leave blank to use the first collection's cover.
+# Image used for link previews (collection-folder/filename).
 hero: "01-southern-california/01.jpg"
 # Where the opening image is anchored if the screen crops it (horizontal% vertical%).
 hero_focus: "50% 25%"
 
-# Information page
+# Home page wall. Leave featured empty and it picks a spread from every collection
+# (featured_per_collection each). Or list exact photos in the order you want:
+# featured:
+#   - 03-arches/02.jpg
+#   - 01-southern-california/14.jpg
+featured_per_collection: 7
+# Optional photo for the About page:
+# portrait: 07-yosemite/09.jpg
+
+# About and Contact pages
 bio: |
   Caroline Quigley is a photographer based in Los Angeles.
 
