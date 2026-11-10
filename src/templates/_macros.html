@@ -1,0 +1,8 @@
+{% macro picture(p, sizes, eager=False, cls="") -%}
+<picture>
+  <source type="image/avif" srcset="{{ p.srcset('avif') }}" sizes="{{ sizes }}">
+  <source type="image/webp" srcset="{{ p.srcset('webp') }}" sizes="{{ sizes }}">
+  <img src="{{ p.fallback }}" width="{{ p.width }}" height="{{ p.height }}" alt="{{ p.alt }}"
+       {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async"{% if cls %} class="{{ cls }}"{% endif %}>
+</picture>
+{%- endmacro %}

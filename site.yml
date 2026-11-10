@@ -1,0 +1,27 @@
+# Site-wide settings. Everything here is plain text — edit freely.
+
+name: Caroline Quigley
+tagline: Photographs
+# One or two lines shown beside the opening image on the home page. Optional.
+statement: ""
+description: "Photographs by Caroline Quigley — landscape, place and quiet observation, Los Angeles."
+
+# Your live address, no trailing slash. Used for links, previews and the domain file.
+base_url: https://example.com
+
+# Opening image: collection-folder/filename. Leave blank to use the first collection's cover.
+hero: ""
+# Where the opening image is anchored if the screen crops it (horizontal% vertical%).
+hero_focus: "50% 50%"
+
+# Information page
+bio: |
+  Caroline Quigley is a photographer based in Los Angeles.
+
+based: Los Angeles, California
+email: ""                 # e.g. studio@yourdomain.com
+instagram: ""             # handle only, no @
+availability: ""          # e.g. "Open to editorial and print commissions."
+# extra_info:
+#   - label: Prints
+#     text: Available on request.
