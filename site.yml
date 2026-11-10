@@ -19,7 +19,7 @@ hero: "01-southern-california/01.jpg"
 featured_per_collection: 7
 
 # Optional photo beside the About text:
-portrait: 01-southern-california/02.jpg
+# portrait: 01-southern-california/02.jpg
 
 # About page
 bio: |
@@ -30,7 +30,7 @@ bio: |
 # Contact page
 contact_heading: Get in touch
 contact_text: For prints, commissions, collaborations, or just to say hello.
-contact_image: 01-southern-california/38.jpg
+# contact_image: 01-southern-california/38.jpg   # optional photo beside the form
 # Form submissions are emailed to form_to, with a copy to each address in form_cc.
 form_to: ciq374@gmail.com
 form_cc:
