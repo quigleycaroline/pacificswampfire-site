@@ -4,15 +4,15 @@ name: Caroline Quigley
 tagline: Photographs
 # One or two lines shown beside the opening image on the home page. Optional.
 statement: ""
-description: "Photographs by Caroline Quigley — landscape, place and quiet observation, Los Angeles."
+description: "Photographs by Caroline Quigley. Landscape, place and the people in it."
 
 # Your live address, no trailing slash. Used for links, previews and the domain file.
-base_url: https://example.com
+base_url: http://localhost:8000
 
 # Opening image: collection-folder/filename. Leave blank to use the first collection's cover.
-hero: ""
+hero: "02-topanga/01.jpg"
 # Where the opening image is anchored if the screen crops it (horizontal% vertical%).
-hero_focus: "50% 50%"
+hero_focus: "50% 25%"
 
 # Information page
 bio: |
