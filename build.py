@@ -370,14 +370,18 @@ def build() -> None:
         seq = c.meta.get("layout")
         c.blocks = manual_blocks(seq, c.photos, f"{c.folder.name}/collection.yml") if seq else auto_blocks(c.photos)
 
-    hero = find_photo(cols, site.get("hero")) or (cols[0].cover if cols else None)
+    hero = find_photo(cols, site.get("share_landscape") or site.get("hero")) or (cols[0].cover if cols else None)
+    share_tall = find_photo(cols, site.get("share_portrait"))
+    shares = [x for x in (hero, share_tall) if x]
     featured = [find_photo(cols, r) for r in site.get("featured") or []] or auto_featured(cols, site.get("featured_per_collection", 7))
     portrait = find_photo(cols, site.get("portrait"))
 
     env = Environment(loader=FileSystemLoader(SRC / "templates"), autoescape=select_autoescape(["html", "xml"]),
                       trim_blocks=True, lstrip_blocks=True)
     asset_v = hashlib.sha1(b"".join((SRC / "static" / n).read_bytes() for n in ("site.css", "site.js"))).hexdigest()[:10]
-    env.globals.update(site=site, collections=cols, v=asset_v)
+    env.globals.update(site=site, collections=cols, v=asset_v,
+                       shares=[{"url": f"{site['base_url']}{x.fallback}", "w": min(x.width, FALLBACK_W),
+                                "h": round(x.height * min(x.width, FALLBACK_W) / x.width), "alt": x.alt} for x in shares])
     env.filters["md"] = inline_md
 
     def render(tpl: str, out: str, **ctx) -> None:

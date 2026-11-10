@@ -8,8 +8,10 @@ description: "Pacific Swampfire is the photography project of Caroline Quigley, 
 # Your live address, no trailing slash.
 base_url: https://pacificswampfire.studio
 
-# Image used when the site is shared as a link (collection-folder/filename).
-hero: "gallery/03.jpg"
+# Link-preview images (what shows when the site is shared). Most apps use the landscape one;
+# apps that prefer tall images (e.g. Pinterest) can use the portrait one.
+share_landscape: "gallery/02.jpg"
+share_portrait: "gallery/01.jpg"
 
 
 # Optional photo beside the About text:
