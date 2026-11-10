@@ -33,6 +33,54 @@
     let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(pack, 120); });
   });
 
+  /* home gallery: regroup rows for the screen width. Same rules as the build: equal-height rows,
+     varied density, no lone vertical on wide screens. Phones get one or two photos per row. */
+  const galleries = [...document.querySelectorAll(".gallery")];
+  if (galleries.length) {
+    const WIDE = [1.5, 2.6, 3.4, 2.2, 3.0, 1.5, 3.6, 2.4], NARROW = [1.0, 1.5, 1.2, 1.7, 0.9, 1.4];
+    const groupRows = (ars, targets, maxK, singleMin) => {
+      const rows = []; let i = 0, t = 0;
+      while (i < ars.length) {
+        const target = targets[t++ % targets.length]; let best = 0, bestErr = Infinity, acc = 0;
+        for (let k = 1; k <= maxK && i + k <= ars.length; k++) {
+          acc += ars[i + k - 1];
+          if (k === 1 && ars[i] < singleMin) continue;
+          const err = Math.abs(acc - target);
+          if (err < bestErr) { best = k; bestErr = err; }
+        }
+        if (!best) best = Math.min(2, ars.length - i);
+        rows.push([i, best]); i += best;
+      }
+      if (rows.length > 1) {
+        const [s, k] = rows[rows.length - 1];
+        if (ars.slice(s, s + k).reduce((a, b) => a + b, 0) < singleMin) { rows.pop(); rows[rows.length - 1][1] += k; }
+      }
+      return rows;
+    };
+    let mode = "";
+    const layout = () => {
+      const m = innerWidth <= 760 ? "narrow" : "wide";
+      if (m === mode) return;
+      mode = m;
+      galleries.forEach((g) => {
+        const tiles = [...g.querySelectorAll(".tile")];
+        const ars = tiles.map((t) => parseFloat(t.dataset.ar));
+        const rows = m === "narrow" ? groupRows(ars, NARROW, 2, 0) : groupRows(ars, WIDE, 4, 1.3);
+        g.querySelectorAll(".row").forEach((r) => r.remove());
+        rows.forEach(([s, k]) => {
+          const row = document.createElement("div");
+          row.className = "row"; row.dataset.n = k;
+          row.style.setProperty("--n", k);
+          row.style.setProperty("--sum", ars.slice(s, s + k).reduce((a, b) => a + b, 0).toFixed(4));
+          row.append(...tiles.slice(s, s + k));
+          g.append(row);
+        });
+      });
+    };
+    layout();
+    let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
+  }
+
   /* mobile menu */
   const btn = document.querySelector(".menu-btn"), nav = document.getElementById("nav");
   if (btn) btn.addEventListener("click", () => {
@@ -102,8 +150,7 @@
     count.textContent = `${i + 1} / ${items.length}`;
     cap.replaceChildren();
     if (onHome) {
-      const a = document.createElement("a"); a.href = it.url; a.textContent = it.collection; cap.append(a);
-      if (it.caption) cap.append(` — ${it.caption}`);
+      cap.textContent = it.caption && it.caption !== it.collection ? `${it.collection}, ${it.caption}` : it.collection;
     } else if (it.caption) cap.textContent = it.caption;
     preload(i + 1); preload(i - 1);
   };

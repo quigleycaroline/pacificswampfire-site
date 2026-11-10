@@ -49,6 +49,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .mark {
   font: 400 25px/1 var(--serif);
 }
+.mark i { font-style: italic; }
 .nav { display: flex; gap: clamp(22px, 3vw, 44px); }
 .nav a {
   font: 400 13px/1 var(--sans); letter-spacing: .01em;
@@ -84,6 +85,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .tile { width: 100%; aspect-ratio: var(--ar); cursor: zoom-in; }
 .tile img { transition: opacity .6s var(--ease), filter .3s; }
 @media (hover: hover) { .tile:hover img { filter: brightness(.92); } }
+
+/* home gallery: full-width rows of equal height; each photo's width follows its own ratio, so nothing is cropped.
+   A row never grows taller than the screen; if it would, it narrows and centres instead. */
+.gallery + .gallery .col-head { padding-top: clamp(56px, 8vw, 120px); }
+.row {
+  display: flex; gap: var(--gap);
+  width: 100%; max-width: calc(82svh * var(--sum) + (var(--n) - 1) * var(--gap) + 2 * var(--m));
+  margin: 0 auto var(--gap); padding: 0 var(--m);
+}
+.row .tile { flex: var(--ar) 1 0; min-width: 0; aspect-ratio: var(--ar); }
 
 /* without the script: plain CSS columns, same look */
 .wall:not(.is-packed) { columns: 4; column-gap: var(--gap); }
@@ -239,6 +250,7 @@ body.lb-open { overflow: hidden; }
   }
   .nav.is-open { opacity: 1; transform: none; pointer-events: auto; }
   .nav a { padding: 12px 0; font: 400 26px/1.1 var(--serif); }
+  .row { max-width: none; }
   .wall:not(.is-packed), .wall[data-cols="3"]:not(.is-packed) { columns: 2; }
   .covers { grid-template-columns: repeat(2, 1fr); }
   .about, .contact-page { grid-template-columns: 1fr; }

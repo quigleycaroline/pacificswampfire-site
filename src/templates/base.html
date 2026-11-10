@@ -27,10 +27,9 @@
 <body class="p-{{ page }}">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head" id="head">
-  <a class="mark" href="/">{{ site.name }}</a>
+  {% set wm = site.name.split(" ", 1) %}<a class="mark" href="/">{{ wm[0] }}{% if wm|length > 1 %} <i>{{ wm[1] }}</i>{% endif %}</a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   <nav class="nav" id="nav" aria-label="Primary">
-    <a href="/work/"{% if page in ("work", "collection") %} aria-current="page"{% endif %}>Collections</a>
     <a href="/about/"{% if page == "about" %} aria-current="page"{% endif %}>About</a>
     <a href="/contact/"{% if page == "contact" %} aria-current="page"{% endif %}>Contact</a>
   </nav>

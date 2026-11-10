@@ -1,6 +1,25 @@
 {% extends "base.html" %}
-{% from "_macros.html" import wall %}
+{% from "_macros.html" import picture %}
 {% block main %}
 <h1 class="sr-only">{{ site.name }}, photographs</h1>
-{{ wall(featured, cols=4) }}
+{% for c in collections %}
+<section class="gallery" id="{{ c.slug }}" aria-labelledby="h-{{ c.slug }}">
+  <header class="col-head">
+    <h2 class="page-title" id="h-{{ c.slug }}">{{ c.title }}</h2>
+    {% if c.meta.place or c.meta.year %}<p class="col-meta">{{ [c.meta.place, c.meta.year]|select|join(", ") }}</p>{% endif %}
+    {% if c.meta.intro %}<p class="col-intro">{{ c.meta.intro.strip() }}</p>{% endif %}
+  </header>
+  {% for row in c.rows %}
+  {% set n = row.photos|length %}
+  <div class="row" data-n="{{ n }}" style="--sum:{{ '%.4f'|format(row.sum) }};--n:{{ n }}">
+    {% for p in row.photos %}
+    <button class="tile ph" type="button" data-i="{{ p.index }}" data-ar="{{ '%.4f'|format(p.ratio) }}"
+            style="--ar:{{ '%.4f'|format(p.ratio) }};--tone:{{ p.tone }}" aria-label="View larger: {{ p.alt }}">
+      {{ picture(p, "(max-width: 760px) 100vw, " ~ ([(100 * p.ratio / row.sum)|round|int, 20]|max) ~ "vw", eager=(loop.index0 < 3 and c is sameas collections[0] and row is sameas c.rows[0])) }}
+    </button>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</section>
+{% endfor %}
 {% endblock %}

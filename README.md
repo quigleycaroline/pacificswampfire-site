@@ -15,6 +15,7 @@ Rename files. Order is alphabetical/numeric by filename.
 Make a folder named with a number and place: `photos/08-big-sur/`. Add photos. Optionally copy `photos/_TEMPLATE/collection.yml` in to set a title, place, year, intro line, cover image or captions. Without it, the folder name becomes the title ("Big Sur").
 
 ## Reorder or rename collections
+The home page shows every collection in folder-number order; each photo appears once.
 Collections appear in folder-number order. Rename `05-grand-canyon` to `02-grand-canyon` to move it up. The title comes from `title:` in that folder's `collection.yml`.
 
 ## Hide a collection without deleting it

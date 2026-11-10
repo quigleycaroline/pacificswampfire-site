@@ -11,26 +11,6 @@ base_url: https://pacificswampfire.studio
 # Image used when the site is shared as a link (collection-folder/filename).
 hero: "03-southern-california/01.jpg"
 
-# Home page wall. Leave featured empty and it picks a spread from every collection
-# (featured_per_collection each). Or list exact photos in the order you want:
-featured:
-  - 03-southern-california/02.jpg
-  - 02-sierras/01.jpg
-  - 02-sierras/03.jpg
-  - 03-southern-california/01.jpg
-  - 03-southern-california/05.jpg
-  - 03-southern-california/10.jpg
-  - 02-sierras/04.jpg
-  - 01-utah-arizona/08.jpg
-  - 03-southern-california/08.jpg
-  - 01-utah-arizona/06.jpg
-  - 02-sierras/09.jpg
-  - 01-utah-arizona/04.jpg
-  - 02-sierras/02.jpg
-  - 01-utah-arizona/02.jpg
-  - 01-utah-arizona/03.jpg
-  - 01-utah-arizona/12.jpg
-  - 03-southern-california/16.jpg
 
 # Optional photo beside the About text:
 # portrait: 03-southern-california/02.jpg

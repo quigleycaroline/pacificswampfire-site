@@ -89,6 +89,7 @@ class Collection:
     photos: list[Photo]
     blocks: list = field(default_factory=list)
     number: int = 0
+    rows: list = field(default_factory=list)
 
     @property
     def cover(self) -> Photo:
@@ -299,6 +300,33 @@ def inline_md(text: str):
     return Markup(t)
 
 
+def gallery_rows(photos: list[Photo]) -> list[dict]:
+    """
+    Editorial rows from aspect ratios alone. Every row is full-width with equal heights
+    (widths follow each photo's ratio), so nothing is cropped. Rows vary in density —
+    a single wide frame, a pair, a run of three or four — so sizes change as you scroll.
+    A row too tall for the screen (e.g. one vertical alone) never happens: singles are
+    only ever landscapes, and a short trailing row is folded into the one before it.
+    """
+    targets = [1.5, 2.6, 3.4, 2.2, 3.0, 1.5, 3.6, 2.4]   # sum of ratios per row ≈ how small its photos are
+    rows, i, t = [], 0, 0
+    n = len(photos)
+    while i < n:
+        target = targets[t % len(targets)]
+        best, best_err, acc = 1, None, 0.0
+        for k in range(1, 5):
+            if i + k > n: break
+            acc += photos[i + k - 1].ratio
+            if k == 1 and photos[i].ratio < 1.3: continue     # a lone vertical would tower
+            err = abs(acc - target)
+            if best_err is None or err < best_err: best, best_err = k, err
+        if best_err is None: best = min(2, n - i)
+        rows.append(photos[i:i + best]); i += best; t += 1
+    if len(rows) > 1 and sum(p.ratio for p in rows[-1]) < 1.3:
+        rows[-2] += rows.pop()
+    return [{"photos": r, "sum": sum(p.ratio for p in r)} for r in rows]
+
+
 def auto_featured(cols: list[Collection], per: int) -> list[Photo]:
     """Home wall: the cover plus evenly spaced frames from each collection, interleaved."""
     picks = []
@@ -356,15 +384,12 @@ def build() -> None:
 
     og = (lambda p: f"{site['base_url']}{p.fallback}" if p else "")
     lb = lambda ps: json.dumps([p.lightbox() for p in ps])
-    render("home.html", "index.html", page="home", featured=featured, lightbox=lb(featured),
-           og_image=og(hero), path="/")
-    render("work.html", "work/index.html", page="work", og_image=og(hero), path="/work/", title="Collections")
-    for i, c in enumerate(cols):
-        nxt = cols[(i + 1) % len(cols)] if len(cols) > 1 else None
-        prv = cols[i - 1] if len(cols) > 1 else None
-        render("collection.html", f"work/{c.slug}/index.html", page="collection", c=c, next_c=nxt, prev_c=prv,
-               lightbox=lb(c.photos), og_image=og(c.cover), path=c.url, title=c.title,
-               description=(c.meta.get("intro") or "").strip())
+    all_photos = [p for c in cols for p in c.photos]
+    for n, p in enumerate(all_photos):
+        p.index = n
+    for c in cols:
+        c.rows = gallery_rows(c.photos)
+    render("home.html", "index.html", page="home", lightbox=lb(all_photos), og_image=og(hero), path="/")
     render("about.html", "about/index.html", page="about", portrait=portrait, og_image=og(hero),
            path="/about/", title="About")
     render("contact.html", "contact/index.html", page="contact", contact_image=find_photo(cols, site.get("contact_image")),
@@ -374,7 +399,7 @@ def build() -> None:
     # static assets, sitemap, robots, CNAME
     shutil.copytree(SRC / "static", DIST / "static")
     shutil.copyfile(SRC / "static" / "favicon.svg", DIST / "favicon.svg")
-    urls = ["/", "/work/", "/about/", "/contact/"] + [c.url for c in cols]
+    urls = ["/", "/about/", "/contact/"]
     base = site["base_url"]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -384,6 +409,9 @@ def build() -> None:
     if domain and "localhost" not in domain and "github.io" not in domain:
         (DIST / "CNAME").write_text(domain + "\n")
     (DIST / ".nojekyll").write_text("")
+    (DIST / "_redirects").write_text(
+        "".join(f"/work/{c.slug} /#{c.slug} 301\n/work/{c.slug}/ /#{c.slug} 301\n" for c in cols)
+        + "/work / 301\n/work/ / 301\n/work/* / 301\n")
     # Cloudflare Pages: image files are content-hashed, so they can be cached forever.
     (DIST / "_headers").write_text(
         "/img/*\n  Cache-Control: public, max-age=31536000, immutable\n"
