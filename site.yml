@@ -28,8 +28,8 @@ bio: |
   This is her photography portfolio.
 
 # Contact page
-contact_heading: Get in touch
-contact_text: For prints, commissions, collaborations, or just to say hello.
+contact_heading: Contact
+contact_text: ""
 # contact_image: 01-southern-california/38.jpg   # optional photo beside the form
 # Form submissions are emailed to form_to, with a copy to each address in form_cc.
 form_to: ciq374@gmail.com
