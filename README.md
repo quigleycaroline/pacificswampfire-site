@@ -7,7 +7,11 @@ A static photography site. Each folder in `photos/` is a collection; the site re
 1. Make a folder in `photos/`, numbered for order: `photos/04-salt-flats/`
 2. Drop in JPEGs (or PNG/TIFF/WebP). They appear in filename order: `01.jpg`, `02.jpg`…
 3. Optional: copy `photos/_TEMPLATE/collection.yml` into the folder for a title, place, year, intro, captions, cover or a hand-set layout.
-4. Commit. On GitHub you can do all of this in the browser: open the folder → **Add file → Upload files** → **Commit changes**. The site is live again ~2–6 minutes later.
+4. Commit and push (GitHub Desktop: **Commit to main → Push origin**). Or on github.com: open the folder → **Add file → Upload files** → **Commit changes**. The site updates a few minutes later.
+
+## Delete photographs
+
+Delete the file from its collection folder, commit, push. It disappears from the site, along with all its resized copies, on the next publish. Renumbering isn't needed: gaps in 01, 02, 04… are fine.
 
 To add to an existing collection, just upload into its folder. To hide one, set `hidden: true`.
 

@@ -350,6 +350,10 @@ def build() -> None:
     if domain and "localhost" not in domain and "github.io" not in domain:
         (DIST / "CNAME").write_text(domain + "\n")
     (DIST / ".nojekyll").write_text("")
+    # Cloudflare Pages: image files are content-hashed, so they can be cached forever.
+    (DIST / "_headers").write_text(
+        "/img/*\n  Cache-Control: public, max-age=31536000, immutable\n"
+        "/static/*\n  Cache-Control: public, max-age=86400\n")
     print(f"Built {len(urls)} pages -> dist/")
 
 

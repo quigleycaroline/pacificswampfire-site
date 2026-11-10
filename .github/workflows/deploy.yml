@@ -1,4 +1,7 @@
-name: Publish site
+name: Build site
+
+# Every change to main (adding, editing or deleting photos) rebuilds the site
+# and publishes the result to the `site` branch, which Cloudflare Pages serves.
 
 on:
   push:
@@ -6,12 +9,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: build
   cancel-in-progress: true
 
 jobs:
@@ -24,23 +25,17 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      # Encoded images are cached by file content, so only new or changed photos are processed.
+      # Encoded images are cached by file content: only new or changed photos are processed.
       - uses: actions/cache@v4
         with:
           path: .cache
           key: img-${{ hashFiles('photos/**') }}
           restore-keys: img-
       - run: python build.py
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish to the site branch
+        run: |
+          cd dist
+          git init -q -b site
+          git add -A
+          git -c user.name="site-builder" -c user.email="actions@users.noreply.github.com" commit -qm "Build ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" site
