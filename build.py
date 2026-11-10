@@ -336,7 +336,8 @@ def build() -> None:
 
     env = Environment(loader=FileSystemLoader(SRC / "templates"), autoescape=select_autoescape(["html", "xml"]),
                       trim_blocks=True, lstrip_blocks=True)
-    env.globals.update(site=site, collections=cols)
+    asset_v = hashlib.sha1(b"".join((SRC / "static" / n).read_bytes() for n in ("site.css", "site.js"))).hexdigest()[:10]
+    env.globals.update(site=site, collections=cols, v=asset_v)
 
     def render(tpl: str, out: str, **ctx) -> None:
         path = DIST / out
@@ -376,7 +377,7 @@ def build() -> None:
     # Cloudflare Pages: image files are content-hashed, so they can be cached forever.
     (DIST / "_headers").write_text(
         "/img/*\n  Cache-Control: public, max-age=31536000, immutable\n"
-        "/static/*\n  Cache-Control: public, max-age=86400\n")
+        "/static/*\n  Cache-Control: public, max-age=31536000, immutable\n")
     print(f"Built {len(urls)} pages -> dist/")
 
 

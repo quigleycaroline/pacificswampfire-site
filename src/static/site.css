@@ -157,23 +157,29 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .contact-page:not(:has(.contact-img)) { grid-template-columns: minmax(0, 560px); justify-content: center; }
 .contact-body { padding-top: clamp(16px, 5vw, 72px); max-width: 560px; justify-self: center; width: 100%; text-align: center; }
 .contact-lede { margin: 18px auto 0; max-width: 34ch; font-size: 20px; color: var(--ink-2); }
-.form { margin-top: 34px; padding: clamp(22px, 3vw, 40px); background: #faf7f2; text-align: left; display: grid; gap: 18px; }
-.form label { display: grid; gap: 6px; font-size: 16px; color: var(--ink-2); }
+.form { margin: 40px auto 0; max-width: 520px; text-align: left; display: grid; gap: 30px; }
+.form label { display: grid; gap: 4px; }
+.form label span { font-size: 15px; color: var(--ink-3); transition: color .2s; }
+.form label:focus-within span { color: var(--ink); }
 .form input, .form textarea {
-  font: italic 400 18px/1.4 var(--sans); color: var(--ink);
-  padding: 10px 12px; border: 1px solid #e3ded5; background: #fff; border-radius: 0; width: 100%;
+  font: italic 400 21px/1.4 var(--sans); color: var(--ink);
+  padding: 6px 0 10px; border: 0; border-bottom: 1px solid #d6d6d6; background: transparent;
+  border-radius: 0; width: 100%; -webkit-appearance: none; appearance: none;
+  transition: border-color .25s;
 }
-.form input:focus, .form textarea:focus { outline: none; border-color: var(--ink); }
-.form textarea { resize: vertical; min-height: 140px; }
+.form input::placeholder, .form textarea::placeholder { color: transparent; }
+.form input:focus, .form textarea:focus { outline: none; border-bottom-color: var(--ink); }
+.form textarea { resize: none; min-height: 120px; field-sizing: content; }
 .form .hp { position: absolute; left: -9999px; }
 .send {
-  justify-self: center; margin-top: 6px; padding: 12px 34px;
-  font: italic 400 19px/1 var(--sans); color: var(--bg); background: var(--ink);
-  transition: opacity .2s;
+  justify-self: center; margin-top: 8px; padding: 13px 46px;
+  font: italic 400 20px/1 var(--sans); color: var(--ink);
+  border: 1px solid var(--ink); background: transparent;
+  transition: background .25s, color .25s;
 }
-.send:hover { opacity: .85; }
-.send[disabled] { opacity: .5; cursor: default; }
-.form-status { margin: 0; min-height: 1.4em; text-align: center; font-size: 17px; color: var(--ink-2); }
+.send:hover { background: var(--ink); color: var(--bg); }
+.send[disabled] { opacity: .45; cursor: default; background: transparent; color: var(--ink); }
+.form-status { margin: -10px 0 0; min-height: 1.4em; text-align: center; font-size: 18px; color: var(--ink-2); }
 .contact-alt { margin-top: 24px; color: var(--ink-2); }
 .contact-alt a { border-bottom: 1px solid var(--rule); }
 

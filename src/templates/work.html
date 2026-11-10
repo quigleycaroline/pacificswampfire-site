@@ -9,7 +9,7 @@
     <a class="cover" href="{{ c.url }}">
       <span class="ph cover-img" style="--tone:{{ p.tone }}">{{ picture(p, "(max-width: 640px) 50vw, 33vw", eager=loop.index0 < 6) }}</span>
       <span class="cover-t">{{ c.title }}</span>
-      <span class="cover-m">{{ c.photos|length }} photographs</span>
+      <span class="cover-m">{{ c.meta.place or (c.photos|length ~ " photographs") }}</span>
     </a>
   </li>
 {% endfor %}

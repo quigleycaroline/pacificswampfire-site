@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="/static/site.css">
+<link rel="stylesheet" href="/static/site.css?v={{ v }}">
 <script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":{{ (site.artist or site.name)|tojson }},"url":{{ (site.base_url ~ "/")|tojson }}{% if site.instagram %},"sameAs":[{{ ("https://instagram.com/" ~ site.instagram)|tojson }}]{% endif %},"jobTitle":"Photographer"}</script>
 </head>
@@ -55,6 +55,6 @@
 </dialog>
 <script id="lb-data" type="application/json">{{ lightbox|safe }}</script>
 {% endif %}
-<script src="/static/site.js" defer></script>
+<script src="/static/site.js?v={{ v }}" defer></script>
 </body>
 </html>
