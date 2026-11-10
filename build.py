@@ -413,8 +413,7 @@ def build() -> None:
         (DIST / "CNAME").write_text(domain + "\n")
     (DIST / ".nojekyll").write_text("")
     (DIST / "_redirects").write_text(
-        "".join(f"/work/{c.slug} /#{c.slug} 301\n/work/{c.slug}/ /#{c.slug} 301\n" for c in cols)
-        + "/work / 301\n/work/ / 301\n/work/* / 301\n")
+"/work / 301\n/work/ / 301\n/work/* / 301\n")
     # Cloudflare Pages: image files are content-hashed, so they can be cached forever.
     (DIST / "_headers").write_text(
         "/img/*\n  Cache-Control: public, max-age=31536000, immutable\n"
