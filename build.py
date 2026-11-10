@@ -405,7 +405,8 @@ def build() -> None:
 
     # static assets, sitemap, robots, CNAME
     shutil.copytree(SRC / "static", DIST / "static")
-    shutil.copyfile(SRC / "static" / "favicon.svg", DIST / "favicon.svg")
+    for name in ("favicon.svg", "favicon.ico", "apple-touch-icon.png"):
+        shutil.copyfile(SRC / "static" / name, DIST / name)
     urls = ["/", "/about/", "/contact/"]
     base = site["base_url"]
     (DIST / "sitemap.xml").write_text(
