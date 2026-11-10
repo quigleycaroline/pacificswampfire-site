@@ -1,29 +1,28 @@
-# Portfolio
+# Pacific Swampfire
 
-A static photography site. Each folder in `photos/` is a collection; the site rebuilds and republishes itself whenever you add or change anything.
+Photography portfolio for pacificswampfire.studio. Each folder in `photos/` is one collection. Every change you push rebuilds and republishes the site in a few minutes.
 
-## Add photographs
+## Add photos to a collection
+Drop JPEGs into its folder, e.g. `photos/03-arches/`. They show in filename order, so name new ones to slot in where you want (`11.jpg`, or `04b.jpg` to sit between 04 and 05).
 
-1. Make a folder in `photos/`, numbered for order: `photos/04-salt-flats/`
-2. Drop in JPEGs (or PNG/TIFF/WebP). They appear in filename order: `01.jpg`, `02.jpg`…
-3. Optional: copy `photos/_TEMPLATE/collection.yml` into the folder for a title, place, year, intro, captions, cover or a hand-set layout.
-4. Commit and push (GitHub Desktop: **Commit to main → Push origin**). Or on github.com: open the folder → **Add file → Upload files** → **Commit changes**. The site updates a few minutes later.
+## Remove photos
+Delete the file from its folder. It disappears from the site, and from the home page if it was featured.
 
-## Delete photographs
+## Reorder photos
+Rename files. Order is alphabetical/numeric by filename.
 
-Delete the file from its collection folder, commit, push. It disappears from the site, along with all its resized copies, on the next publish. Renumbering isn't needed: gaps in 01, 02, 04… are fine.
+## Start a new collection
+Make a folder named with a number and place: `photos/08-big-sur/`. Add photos. Optionally copy `photos/_TEMPLATE/collection.yml` in to set a title, place, year, intro line, cover image or captions. Without it, the folder name becomes the title ("Big Sur").
 
-To add to an existing collection, just upload into its folder. To hide one, set `hidden: true`.
+## Reorder or rename collections
+Collections appear in folder-number order. Rename `05-grand-canyon` to `02-grand-canyon` to move it up. The title comes from `title:` in that folder's `collection.yml`.
 
-## Files
+## Hide a collection without deleting it
+Add `hidden: true` to its `collection.yml`.
 
-Export at the long edge you want viewed (3000–4000 px is plenty), sRGB or Adobe RGB, high-quality JPEG. Keep full-resolution masters in your own archive; GitHub repos are comfortable up to ~1 GB, roughly 400–600 web-export photographs. Location/camera metadata is stripped from everything published.
+## Site-wide text
+`site.yml`: wordmark, About text, contact heading, which photo sits beside About and Contact, and which photos lead the home page.
 
-## Site text
-
-Name, bio, email, Instagram and the opening image live in `site.yml`.
-
-## Preview locally (optional)
-
-    pip install -r requirements.txt
-    python3 build.py --serve     # http://localhost:8000
+## Publish
+GitHub Desktop: write a short summary → **Commit to main** → **Push origin**. Or on github.com: open a folder → **Add file → Upload files**, or open a photo → **⋯ → Delete file** → **Commit changes**.
+Check progress at github.com/quigleycaroline/pacificswampfire-site/actions (green check = live).

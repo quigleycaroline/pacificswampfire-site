@@ -54,6 +54,27 @@
     });
   }, { passive: true });
 
+  /* contact form: send in place, show a short confirmation */
+  const form = document.getElementById("contact-form");
+  if (form) {
+    const status = form.querySelector(".form-status"), send = form.querySelector(".send");
+    if (location.search.includes("sent=1")) status.textContent = "Thank you. Your message is on its way.";
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (form._honey && form._honey.value) return;
+      send.disabled = true; status.textContent = "Sending…";
+      try {
+        const r = await fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+          method: "POST", headers: { Accept: "application/json" }, body: new FormData(form) });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok || d.success === "false" || d.success === false) throw new Error(d.message || "failed");
+        form.reset(); status.textContent = "Thank you. Your message is on its way.";
+      } catch (err) {
+        status.textContent = "That didn’t go through. Please try again in a moment.";
+      } finally { send.disabled = false; }
+    });
+  }
+
   /* lightbox */
   const lb = document.getElementById("lb");
   const dataEl = document.getElementById("lb-data");

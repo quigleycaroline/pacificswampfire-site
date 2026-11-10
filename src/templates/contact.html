@@ -1,12 +1,30 @@
 {% extends "base.html" %}
+{% from "_macros.html" import picture %}
 {% block main %}
-<div class="contact">
-  <h1 class="page-title">Contact</h1>
-  {% if site.availability %}<p>{{ site.availability }}</p>{% endif %}
-  <dl class="contact-list">
-    {% if site.email %}<dt>Email</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd>{% endif %}
-    {% if site.instagram %}<dt>Instagram</dt><dd><a href="https://instagram.com/{{ site.instagram }}" rel="me noopener" target="_blank">@{{ site.instagram }}</a></dd>{% endif %}
-    {% if site.based %}<dt>Based in</dt><dd>{{ site.based }}</dd>{% endif %}
-  </dl>
+<div class="contact-page">
+  {% if contact_image %}
+  <div class="contact-img ph" style="--tone:{{ contact_image.tone }}">{{ picture(contact_image, "(max-width: 760px) 100vw, 45vw", eager=True) }}</div>
+  {% endif %}
+  <div class="contact-body">
+    <h1 class="page-title">{{ site.contact_heading or "Contact" }}</h1>
+    {% if site.contact_text %}<p class="contact-lede">{{ site.contact_text }}</p>{% endif %}
+
+    {% if site.form_to %}
+    <form class="form" id="contact-form" action="https://formsubmit.co/{{ site.form_to }}" method="POST">
+      <input type="hidden" name="_subject" value="New message from {{ site.base_url|replace('https://', '') }}">
+      {% if site.form_cc %}<input type="hidden" name="_cc" value="{{ site.form_cc|join(',') }}">{% endif %}
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="{{ site.base_url }}/contact/?sent=1">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label><span>Name</span><input type="text" name="name" required autocomplete="name" placeholder="Your name"></label>
+      <label><span>Email</span><input type="email" name="email" required autocomplete="email" placeholder="Your email address"></label>
+      <label><span>Message</span><textarea name="message" rows="6" required placeholder="Your message"></textarea></label>
+      <button type="submit" class="send">Send message</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+    {% endif %}
+    {% if site.instagram %}<p class="contact-alt">Or find me on <a href="https://instagram.com/{{ site.instagram }}" rel="me noopener" target="_blank">Instagram</a>.</p>{% endif %}
+  </div>
 </div>
 {% endblock %}

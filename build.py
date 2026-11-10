@@ -356,7 +356,8 @@ def build() -> None:
                description=(c.meta.get("intro") or "").strip())
     render("about.html", "about/index.html", page="about", portrait=portrait, og_image=og(hero),
            path="/about/", title="About")
-    render("contact.html", "contact/index.html", page="contact", og_image=og(hero), path="/contact/", title="Contact")
+    render("contact.html", "contact/index.html", page="contact", contact_image=find_photo(cols, site.get("contact_image")),
+           og_image=og(hero), path="/contact/", title="Contact")
     render("404.html", "404.html", page="404", title="Not found", path="/404")
 
     # static assets, sitemap, robots, CNAME
