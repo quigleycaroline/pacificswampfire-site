@@ -9,17 +9,17 @@ description: "Pacific Swampfire is the multimedia artistic project of Caroline Q
 base_url: https://pacificswampfire.studio
 
 # Image used when the site is shared as a link (collection-folder/filename).
-hero: "01-southern-california/01.jpg"
+hero: "03-southern-california/01.jpg"
 
 # Home page wall. Leave featured empty and it picks a spread from every collection
 # (featured_per_collection each). Or list exact photos in the order you want:
 # featured:
 #   - 03-arches/02.jpg
-#   - 01-southern-california/14.jpg
-featured_per_collection: 7
+#   - 03-southern-california/14.jpg
+featured_per_collection: 12
 
 # Optional photo beside the About text:
-# portrait: 01-southern-california/02.jpg
+# portrait: 03-southern-california/02.jpg
 
 # About page
 bio: |
@@ -30,7 +30,7 @@ bio: |
 # Contact page
 contact_heading: Contact
 contact_text: ""
-# contact_image: 01-southern-california/38.jpg   # optional photo beside the form
+# contact_image: 03-southern-california/38.jpg   # optional photo beside the form
 # Form submissions are emailed to form_to, with a copy to each address in form_cc.
 form_to: ciq374@gmail.com
 form_cc:
