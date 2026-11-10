@@ -61,6 +61,7 @@ class Photo:
     alt: str = ""
     caption: str = ""
     collection_title: str = ""
+    location: str = ""
 
     @property
     def ratio(self) -> float:
@@ -77,7 +78,7 @@ class Photo:
     def lightbox(self) -> dict:
         return {"avif": self.srcset("avif"), "webp": self.srcset("webp"), "src": self.fallback,
                 "w": self.width, "h": self.height, "alt": self.alt, "caption": self.caption,
-                "collection": self.collection_title, "url": f"/work/{self.collection_slug}/"}
+                "collection": self.collection_title, "location": self.location, "url": f"/#{self.collection_slug}"}
 
 
 @dataclass
@@ -270,8 +271,10 @@ def load_collections() -> list[Collection]:
             t = texts.get(f.name) or {}
             if isinstance(t, str):
                 t = {"caption": t}
-            photos.append(Photo(file=f, collection_slug=slug, caption=t.get("caption", ""), collection_title=title,
-                                alt=t.get("alt") or t.get("caption") or f"{title}, photograph {i + 1} of {len(files)}"))
+            loc = t.get("location", "")
+            photos.append(Photo(file=f, collection_slug=slug, caption=t.get("caption", ""), collection_title=title, location=loc,
+                                alt=t.get("alt") or (f"Photograph, {loc}" if loc else "") or t.get("caption")
+                                    or f"{title}, photograph {i + 1} of {len(files)}"))
         cols.append(Collection(slug=slug, folder=d, title=title, meta=meta, photos=photos))
     cols.sort(key=lambda c: (c.meta.get("order", 999),))
     for n, c in enumerate(cols, 1):

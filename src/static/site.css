@@ -88,7 +88,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* home gallery: full-width rows of equal height; each photo's width follows its own ratio, so nothing is cropped.
    A row never grows taller than the screen; if it would, it narrows and centres instead. */
-.gallery + .gallery .col-head { padding-top: clamp(56px, 8vw, 120px); }
+.p-home main { padding-top: clamp(4px, 1vw, 12px); }
+.gallery + .gallery { margin-top: clamp(28px, 4vw, 64px); }
+/* location label: hidden until the photo is hovered or focused */
+.tile .loc {
+  position: absolute; left: 10px; bottom: 10px; z-index: 2; max-width: calc(100% - 20px);
+  padding: 5px 10px 6px; background: var(--bg); color: var(--ink);
+  font: italic 400 16px/1.2 var(--serif); text-align: left;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0; transform: translateY(4px); transition: opacity .25s var(--ease), transform .25s var(--ease);
+  pointer-events: none;
+}
+@media (hover: hover) { .tile:hover .loc { opacity: 1; transform: none; } }
+.tile:focus-visible .loc { opacity: 1; transform: none; }
 .row {
   display: flex; gap: var(--gap);
   width: 100%; max-width: calc(82svh * var(--sum) + (var(--n) - 1) * var(--gap) + 2 * var(--m));

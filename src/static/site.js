@@ -150,7 +150,7 @@
     count.textContent = `${i + 1} / ${items.length}`;
     cap.replaceChildren();
     if (onHome) {
-      cap.textContent = it.caption && it.caption !== it.collection ? `${it.collection}, ${it.caption}` : it.collection;
+      cap.textContent = it.location || it.caption || it.collection;
     } else if (it.caption) cap.textContent = it.caption;
     preload(i + 1); preload(i - 1);
   };
