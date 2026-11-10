@@ -161,6 +161,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .about:not(:has(.about-img)) { grid-template-columns: minmax(0, 560px); justify-content: center; }
 .about-text .page-title { margin-bottom: 26px; }
 .about-text p { margin: 0 0 1.1em; max-width: 50ch; font-size: 16px; line-height: 1.7; color: var(--ink); }
+.about-text p:first-of-type {
+  border-left: 1px solid var(--ink); padding-left: clamp(16px, 2vw, 24px); max-width: calc(50ch + clamp(16px, 2vw, 24px));
+  margin-left: calc(-1 * clamp(17px, 2vw + 1px, 25px));
+}
+@media (max-width: 760px) { .about-text p:first-of-type { margin-left: 0; } }
 .about-text strong { font-weight: 500; }
 .about-text em { font-style: italic; }
 .about-links { font-size: 13px; }
