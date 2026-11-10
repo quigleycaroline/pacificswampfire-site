@@ -290,6 +290,15 @@ def find_photo(cols: list[Collection], ref: str | None) -> Photo | None:
     sys.exit(f"site.yml: hero '{ref}' not found. Use  collection-folder/filename.jpg")
 
 
+def inline_md(text: str):
+    """Escape, then allow **bold** and *italic* in site text."""
+    from markupsafe import Markup, escape
+    t = str(escape(text))
+    t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+    t = re.sub(r"(?<!\*)\*(?!\s)(.+?)(?<!\s)\*(?!\*)", r"<em>\1</em>", t)
+    return Markup(t)
+
+
 def auto_featured(cols: list[Collection], per: int) -> list[Photo]:
     """Home wall: the cover plus evenly spaced frames from each collection, interleaved."""
     picks = []
@@ -338,6 +347,7 @@ def build() -> None:
                       trim_blocks=True, lstrip_blocks=True)
     asset_v = hashlib.sha1(b"".join((SRC / "static" / n).read_bytes() for n in ("site.css", "site.js"))).hexdigest()[:10]
     env.globals.update(site=site, collections=cols, v=asset_v)
+    env.filters["md"] = inline_md
 
     def render(tpl: str, out: str, **ctx) -> None:
         path = DIST / out

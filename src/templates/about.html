@@ -5,7 +5,7 @@
   {% if portrait %}<div class="about-img ph" style="--tone:{{ portrait.tone }}">{{ picture(portrait, "(max-width: 760px) 100vw, 40vw", eager=True) }}</div>{% endif %}
   <div class="about-text">
     <h1 class="page-title">About</h1>
-    {% if site.bio %}{% for para in site.bio.strip().split("\n\n") %}<p>{{ para }}</p>{% endfor %}{% endif %}
+    {% if site.bio %}{% for para in site.bio.strip().split("\n\n") %}<p>{{ para|md }}</p>{% endfor %}{% endif %}
     <p class="about-links"><a href="/contact/">Contact</a>{% if site.instagram %} &middot; <a href="https://instagram.com/{{ site.instagram }}" rel="me noopener" target="_blank">Instagram</a>{% endif %}</p>
   </div>
 </div>

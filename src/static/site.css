@@ -137,6 +137,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .about:not(:has(.about-img)) { grid-template-columns: minmax(0, 560px); justify-content: center; }
 .about-text .page-title { margin-bottom: 26px; }
 .about-text p { margin: 0 0 1em; max-width: 40ch; font-size: clamp(20px, 1.7vw, 24px); line-height: 1.4; color: #222; }
+.about-text strong { font-weight: 700; }
+.about-text em { font-style: normal; }
 .about-links { font-size: 18px;  }
 .about-links a, .contact a { border-bottom: 1px solid var(--rule); transition: border-color .2s; }
 .about-links a:hover, .contact a:hover { border-color: var(--ink); }
