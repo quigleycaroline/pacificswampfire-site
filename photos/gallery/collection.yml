@@ -3,43 +3,40 @@ title: Gallery
 # location: shown when you hover a photo. guess: true = Claude's guess, not yet confirmed.
 images:
   01.jpg: {location: "Grand Canyon, Arizona", guess: true}
-  02.jpg: {location: "Grand Canyon, Arizona", guess: true}
-  03.jpg: {location: "Grand Canyon, Arizona", guess: true}
-  04.jpg: {location: "Grand Canyon, Arizona", guess: true}
-  05.jpg: {location: "Virgin River, Zion", guess: true}
-  06.jpg: {location: "Zion Canyon, Utah", guess: true}
-  07.jpg: {location: "Zion Lodge, Utah", guess: true}
-  08.jpg: {location: "Turret Arch, Arches", guess: true}
-  09.jpg: {location: "Arches National Park, Utah", guess: true}
-  10.jpg: {location: "Balanced Rock, Arches", guess: true}
-  11.jpg: {location: "La Sal Mountains from Arches", guess: true}
-  12.jpg: {location: "Turret Arch, Arches", guess: true}
-  13.jpg: {location: "Arches Scenic Drive, Utah", guess: true}
-  14.jpg: {location: "Arches National Park, Utah", guess: true}
-  15.jpg: {location: "Near Yosemite, California", guess: true}
-  16.jpg: {location: "Near Yosemite, California", guess: true}
-  17.jpg: {location: "Giant Forest, Sequoia", guess: true}
-  18.jpg: {location: "Sequoia National Park", guess: true}
-  19.jpg: {location: "Generals Highway, Sequoia", guess: true}
+  02.jpg: {location: "Avalon Harbor, Catalina", guess: true}
+  03.jpg: {location: "Catalina Island", guess: true}
+  04.jpg: {location: "Near Yosemite, California", guess: true}
+  05.jpg: {location: "Giant Forest, Sequoia", guess: true}
+  06.jpg: {location: "Virgin River, Zion", guess: true}
+  07.jpg: {location: "Grand Canyon, Arizona", guess: true}
+  08.jpg: {location: "Yosemite Valley", guess: true}
+  09.jpg: {location: "Balanced Rock, Arches", guess: true}
+  10.jpg: {location: "Catalina Island", guess: true}
+  11.jpg: {location: "Turret Arch, Arches", guess: true}
+  12.jpg: {location: "Grand Canyon, Arizona", guess: true}
+  13.jpg: {location: "Near Yosemite, California", guess: true}
+  14.jpg: {location: "Zion Canyon, Utah", guess: true}
+  15.jpg: {location: "Zion Lodge, Utah", guess: true}
+  16.jpg: {location: "Grand Canyon, Arizona", guess: true}
+  17.jpg: {location: "Arches National Park, Utah", guess: true}
+  18.jpg: {location: "La Sal Mountains from Arches", guess: true}
+  19.jpg: {location: "Turret Arch, Arches", guess: true}
   20.jpg: {location: "Sequoia National Park", guess: true}
-  21.jpg: {location: "Sequoia National Park", guess: true}
-  22.jpg: {location: "Moro Rock, Sequoia", guess: true}
-  23.jpg: {location: "Yosemite Valley", guess: true}
-  24.jpg: {location: "Merced River, Yosemite", guess: true}
+  21.jpg: {location: "Avalon Harbor, Catalina", guess: true}
+  22.jpg: {location: "Arches Scenic Drive, Utah", guess: true}
+  23.jpg: {location: "Topanga Canyon", guess: true}
+  24.jpg: {location: "Arches National Park, Utah", guess: true}
   25.jpg: {location: "Merced River, Yosemite", guess: true}
-  26.jpg: {location: "Catalina Island", guess: true}
-  27.jpg: {location: "Avalon Harbor, Catalina", guess: true}
-  28.jpg: {location: "Malibu coast", guess: true}
-  29.jpg: {location: "Topanga Canyon", guess: true}
+  26.jpg: {location: "Sequoia National Park", guess: true}
+  27.jpg: {location: "Catalina Island", guess: true}
+  28.jpg: {location: "Moro Rock, Sequoia", guess: true}
+  29.jpg: {location: "Pacific Coast Highway, Malibu", guess: true}
   30.jpg: {location: "Topanga Canyon", guess: true}
-  31.jpg: {location: "Topanga Canyon", guess: true}
-  32.jpg: {location: "Pacific Coast Highway, Malibu", guess: true}
-  33.jpg: {location: "Malibu", guess: true}
-  34.jpg: {location: "Catalina Channel", guess: true}
-  35.jpg: {location: "Catalina Island", guess: true}
-  36.jpg: {location: "Catalina Island", guess: true}
-  37.jpg: {location: "Avalon Harbor, Catalina", guess: true}
+  31.jpg: {location: "Catalina Channel", guess: true}
+  32.jpg: {location: "Catalina Channel", guess: true}
+  33.jpg: {location: "Catalina Island", guess: true}
+  34.jpg: {location: "Catalina Island", guess: true}
+  35.jpg: {location: "Malibu", guess: true}
+  36.jpg: {location: "Topanga Canyon", guess: true}
+  37.jpg: {location: "Merced River, Yosemite", guess: true}
   38.jpg: {location: "Catalina Island", guess: true}
-  39.jpg: {location: "Catalina Channel", guess: true}
-  40.jpg: {location: "Catalina Island", guess: true}
-  41.jpg: {location: "Catalina Island", guess: true}
